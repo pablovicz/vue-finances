@@ -1,0 +1,18 @@
+const { GraphQLServer} = require('graphql-yoga');
+const { prisma } = require('./generated/prisma-client/index');
+
+const resolvers = {
+  Query: {
+    user(perent, args, context, info){
+      return prisma.user({ id: args.id  })
+    }
+  }
+}
+
+const  server = new GraphQLServer({
+  typeDefs: `${__dirname}/schema.graphql`,
+  resolvers
+});
+
+server.start().then(() => console.log('Server running on http://localhost:4000...'))
+
