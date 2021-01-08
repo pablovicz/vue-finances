@@ -5,6 +5,7 @@ const resolvers = {
   Query: {
     user(perent, args, context, info){
       return prisma.user({ id: args.id  })
+
     }
   }
 }
