@@ -1,10 +1,27 @@
 const { GraphQLServer} = require('graphql-yoga');
+const Biding = require('prisma-binding');
 const { prisma } = require('./generated/prisma-client/index');
+
+const binding = new Binding.Prisma({
+  typeDefs: `${__dirname}/generated/graphql-schema/prisma.graphql`,
+  endpoint: process.env.PRISMA_ENDPOINT
+});
+
 
 const resolvers = {
   Query: {
     user(perent, args, context, info){
-      return prisma.user({ id: args.id  })
+      //return prisma.user({ id: args.id  })
+      //  .then( user => {
+      //    console.log('User:', user);
+      //    return user;
+      //  })
+
+      return biding.query.user( { where: {id: args.id}}, info )
+      .then( user => {
+            console.log('User:', user);
+            return user;
+      });
 
     }
   }
